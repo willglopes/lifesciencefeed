@@ -1,0 +1,44 @@
+{
+  "kind": "collectionType",
+  "collectionName": "therapy_areas",
+  "info": {
+    "singularName": "therapy-area",
+    "pluralName": "therapy-areas",
+    "displayName": "Therapy Area"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "required": true,
+      "unique": true
+    },
+    "slug": {
+      "type": "uid",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "targetField": "name"
+    },
+    "articles": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::article.article",
+      "mappedBy": "therapy_areas"
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "kind": "collectionType",
+  "collectionName": "disease_areas",
+  "info": {
+    "singularName": "disease-area",
+    "pluralName": "disease-areas",
+    "displayName": "Disease Area"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "minLength": 2,
+      "maxLength": 100,
+      "required": true,
+      "unique": true
+    },
+    "slug": {
+      "type": "uid",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "targetField": "name",
+      "required": true
+    },
+    "articles": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::article.article",
+      "mappedBy": "diseaseArea"
+    },
+    "categories": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::category.category",
+      "mappedBy": "diseaseArea"
+    },
+    "therapy_areas": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::therapy-area.therapy-area"
+    }
+  }
+}

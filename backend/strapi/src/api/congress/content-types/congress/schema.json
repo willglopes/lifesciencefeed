@@ -1,0 +1,62 @@
+{
+  "kind": "collectionType",
+  "collectionName": "congresses",
+  "info": {
+    "singularName": "congress",
+    "pluralName": "congresses",
+    "displayName": "Congress"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "required": true,
+      "unique": true
+    },
+    "date": {
+      "type": "date",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "required": true
+    },
+    "summary": {
+      "type": "blocks",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "required": true
+    },
+    "therapy_area": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::therapy-area.therapy-area"
+    },
+    "link": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "required": true,
+      "unique": true
+    }
+  }
+}

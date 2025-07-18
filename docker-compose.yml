@@ -1,0 +1,52 @@
+services:
+  postgres:
+    image: postgres:14-alpine
+    container_name: lifesciencefeed_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: strapi
+      POSTGRES_USER: strapi
+      POSTGRES_PASSWORD: 07021983Wl!
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - local
+
+  strapi:
+    build:
+      context: ./backend/strapi   # adjust if your folder differs
+      dockerfile: Dockerfile
+    container_name: lifesciencefeed_strapi
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    env_file: .env
+    ports:
+      - '1337:1337'
+    volumes:
+      - ./backend/strapi:/usr/src/api/strapi
+    networks:
+      - local
+
+  nextjs:
+    build:
+      context: ./frontend/nextjs  # adjust if your folder differs
+      dockerfile: Dockerfile
+    container_name: lifesciencefeed_web
+    restart: unless-stopped
+    depends_on:
+      - strapi
+    env_file: .env
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./frontend/nextjs:/app
+    networks:
+      - local
+
+volumes:
+  db_data:
+
+networks:
+  local:
+    driver: bridge

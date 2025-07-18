@@ -1,0 +1,20 @@
+# use Debian-based image to avoid musl/sharp issues
+FROM node:18-slim
+WORKDIR /usr/src/api/strapi
+
+# copy only package manifests to leverage layer caching
+COPY package*.json ./
+
+# install build tools and optional deps (sharp)
+RUN apt-get update && \
+    apt-get install -y python3 make g++ && \
+    npm install --include=optional && \
+    apt-get purge -y python3 make g++ && \
+    apt-get autoremove -y && \
+    rm -rf /var/lib/apt/lists/*
+
+# copy application code
+COPY . .
+
+# start Strapi in develop mode
+ENTRYPOINT ["npm","run","develop"]

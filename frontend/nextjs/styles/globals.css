@@ -1,0 +1,71 @@
+@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.mySearchIcon {
+   width: 24px;
+   height: 24px;
+   stroke: #e20d0d;
+   stroke-width: 2;
+   stroke-linecap: round;
+   stroke-linejoin: round;
+}
+
+a {
+  color: #171717;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #374050;
+  text-decoration: none;
+}
+
+span {
+  color: #374050;
+  text-decoration: none;
+}
+
+span:hover {
+  color: #171717;
+  text-decoration: none;
+}
+
+/* File: frontend/nextjs/src/styles/globals.css */
+/* This file contains global styles for the Next.js application */
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #ffffff;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.mySubmenu {
+  @apply ml-2 text-sm;
+      color: #e20d0d;
+      fill: #e20d0d;
+}
+
+.myIcon {
+   color: aquamarine;
+    }

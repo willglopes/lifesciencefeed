@@ -1,0 +1,8 @@
+{
+  "devDependencies": {
+    "@svgr/webpack": "^8.1.0"
+  },
+  "dependencies": {
+    "strapi-plugin-strapi-algolia": "^2.0.4"
+  }
+}
