@@ -1,8 +1,21 @@
 {
+   "name": "lifesciencefeed",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
   "devDependencies": {
     "@svgr/webpack": "^8.1.0"
   },
   "dependencies": {
-    "strapi-plugin-strapi-algolia": "^2.0.4"
+    "strapi-plugin-strapi-algolia": "^2.0.4",
+        "next": "^14.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   }
+
 }
