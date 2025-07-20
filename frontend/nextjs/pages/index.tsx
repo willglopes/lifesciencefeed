@@ -26,14 +26,51 @@ interface HomeProps {
   categories: SectionMeta[];
 }
 
-export const getStaticProps: GetStaticProps<HomeProps> = async () => {
-  const therapyAreas = await fetchTherapyAreas();
-  const categories   = await fetchCategories();
+export const getStaticProps: GetStaticProps = async () => {
+  try {
+    // Your existing API calls with error handling
+    let articles = [];
+    let categories = [];
+    let therapyAreas = [];
 
-  return {
-    props: { therapyAreas, categories },
-    revalidate: 300,
-  };
+    try {
+      articles = await fetchArticlesWithDiseaseAreas();
+    } catch (error) {
+      console.warn('Failed to fetch articles:', error);
+    }
+
+    try {
+      categories = await fetchCategories();
+    } catch (error) {
+      console.warn('Failed to fetch categories:', error);
+    }
+
+    try {
+      therapyAreas = await fetchTherapyAreas();
+    } catch (error) {
+      console.warn('Failed to fetch therapy areas:', error);
+    }
+
+    return {
+      props: {
+        articles: articles.slice(0, 20),
+        categories: categories.slice(0, 10),
+        therapyAreas: therapyAreas.slice(0, 10),
+      },
+      revalidate: 300,
+    };
+  } catch (error) {
+    console.error('getStaticProps error:', error);
+    // Return empty data instead of failing
+    return {
+      props: {
+        articles: [],
+        categories: [],
+        therapyAreas: [],
+      },
+      revalidate: 60,
+    };
+  }
 };
 
 export default function Home({ therapyAreas, categories }: HomeProps) {

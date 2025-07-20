@@ -218,40 +218,35 @@ function processArticleData(entries: any[]): ArticleSummary[] {
  */
 export async function fetchArticlesWithDiseaseAreas(): Promise<ArticleSummary[]> {
   try {
-    const filteringApproaches = [
-      `/api/articles?filters[disease_areas][id][$notNull]=true&sort=publishedAt:desc&pagination[pageSize]=100&locale=en&populate=heroImage,category,disease_areas`,
-      `/api/articles?filters[disease_areas][$notNull]=true&sort=publishedAt:desc&pagination[pageSize]=100&locale=en&populate=heroImage,category,disease_areas`,
-      `/api/articles?filters[disease_areas][$exists]=true&sort=publishedAt:desc&pagination[pageSize]=100&locale=en&populate=heroImage,category,disease_areas`,
-    ];
-
-    for (const approach of filteringApproaches) {
-      try {
-        const json = await fetchJSON(approach);
-        
-        if (json.data) {
-          return processArticleData(json.data);
-        }
-      } catch (error) {
-        continue;
-      }
+    const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_URL;
+    
+    if (!strapiUrl) {
+      console.warn('NEXT_PUBLIC_STRAPI_URL not configured');
+      return [];
     }
 
-    // Fallback: fetch all articles and filter manually
-    const json = await fetchJSON(
-      `/api/articles?sort=publishedAt:desc&pagination[pageSize]=100&locale=en&populate=heroImage,category,disease_areas`
-    );
+    const response = await fetch(`${strapiUrl}/api/articles?populate=*`);
     
-    const articlesWithDiseaseAreas = (json.data || []).filter((entry: any) => {
-      const diseaseAreas = entry.attributes?.disease_areas?.data;
-      return diseaseAreas && diseaseAreas.length > 0;
-    });
+    if (!response.ok) {
+      console.warn('API returned error:', response.status, response.statusText);
+      return [];
+    }
 
-    return processArticleData(articlesWithDiseaseAreas);
-    
+    const contentType = response.headers.get('content-type');
+    if (!contentType || !contentType.includes('application/json')) {
+      console.warn('API returned non-JSON response');
+      return [];
+    }
+
+    const data = await response.json();
+    // Process your data here
+    return data.data || [];
   } catch (error) {
+    console.error('Failed to fetch articles:', error);
     return [];
   }
 }
+
 
 /**
  * Get article counts by disease area for a specific therapy area.
