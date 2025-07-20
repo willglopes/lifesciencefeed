@@ -124,9 +124,10 @@ export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
       Content: Array.isArray(item.Content) ? item.Content : [],
       heroImageUrl: item.heroImage?.data?.attributes?.url || null,
       therapyAreas: (item.therapyAreas?.data || []).map((ta: any) => ({
-        name: ta.attributes?.name || 'Unknown',
-        slug: ta.attributes?.slug || '',
-      })).filter(ta => ta.slug), // Remove invalid therapy areas
+  name: ta.attributes?.name || 'Unknown',
+  slug: ta.attributes?.slug || '',
+})).filter((ta: { name: string; slug: string }) => ta.slug), // Remove invalid therapy areas
+
     };
 
     return { 
