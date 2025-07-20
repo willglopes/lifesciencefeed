@@ -2,7 +2,12 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import truncate from 'lodash/truncate';
+
+// Simple truncate function to replace lodash
+const truncate = (str: string, options?: { length?: number }) => {
+  const length = options?.length || 100;
+  return str.length > length ? str.substring(0, length) + '...' : str;
+};
 
 interface SidebarItem {
   slug: string;
