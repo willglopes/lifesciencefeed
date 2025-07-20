@@ -2,7 +2,7 @@
 import React from 'react';
 
 // Fallback inline icons for menu and close
-const IconPaths: Record<string, JSX.Element> = {
+const IconPaths: Record<string, React.ReactElement> = {
   menu: (
     <path
       fillRule="evenodd"
