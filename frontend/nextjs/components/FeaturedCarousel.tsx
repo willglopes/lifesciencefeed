@@ -8,7 +8,8 @@ import 'swiper/css';
 import 'swiper/css/autoplay' // Import Swiper styles
 import 'swiper/css/pagination';
 import Link from 'next/link';
-import truncate from 'lodash/truncate';
+// Simple truncate function
+const truncate = (str: string, length: number = 100) => str.length > length ? str.substring(0, length) + '...' : str;
 
 export interface ArticleSummary {
   slug: string;
