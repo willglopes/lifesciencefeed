@@ -3,14 +3,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-
-interface ArticleSummary {
-  slug: string;
-  therapyAreaSlug: string;
-  title: string;
-  excerpt?: string;
-  imageUrl?: string;
-}
+import { ArticleSummary } from '../lib/api'; // Use the global ArticleSummary interface
 
 interface SessionSectionProps {
   /** number of featured articles in the top row */
@@ -72,7 +65,24 @@ export default function SessionSection({
             imageUrl = `${base}${imageUrl}`;
           }
 
-          return { slug, title, excerpt, imageUrl };
+          // Get additional properties for ArticleSummary interface
+          const cat = raw.category?.data?.attributes || raw.category;
+          const diseaseArea = raw.disease_areas?.data?.[0]?.attributes || raw.disease_areas?.[0];
+          const therapyArea = raw.therapy_areas?.data?.[0]?.attributes || raw.therapy_areas?.[0];
+
+          return {
+            slug,
+            title,
+            excerpt,
+            ImageUrl: imageUrl || null,
+            publishedAt: raw.publishedAt || raw.PublishedAt || '',
+            categoryName: cat?.name || null,
+            categorySlug: cat?.slug || null,
+            diseaseAreaName: diseaseArea?.name || null,
+            diseaseAreaSlug: diseaseArea?.slug || null,
+            therapyAreaName: therapyArea?.name || null,
+            therapyAreaSlug: therapyArea?.slug || therapyAreaSlug || null,
+          };
         });
 
         setPrimaryItems(items.slice(0, primaryCount));
@@ -108,9 +118,9 @@ export default function SessionSection({
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
         {primaryItems.map((item, i) => (
           <div key={`${item.slug}-${i}`} className="flex flex-col">
-            {item.imageUrl ? (
+            {item.ImageUrl ? (
               <img
-                src={item.imageUrl}
+                src={item.ImageUrl}
                 alt={item.title}
                 className="w-full h-40 object-cover rounded"
               />
@@ -133,9 +143,9 @@ export default function SessionSection({
       <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 gap-4">
         {secondaryItems.map((item, i) => (
           <div key={`${item.slug}-sec-${i}`} className="flex flex-col">
-            {item.imageUrl ? (
+            {item.ImageUrl ? (
               <img
-                src={item.imageUrl}
+                src={item.ImageUrl}
                 alt={item.title}
                 className="w-full h-24 object-cover rounded"
               />
@@ -151,3 +161,4 @@ export default function SessionSection({
     </section>
   );
 }
+

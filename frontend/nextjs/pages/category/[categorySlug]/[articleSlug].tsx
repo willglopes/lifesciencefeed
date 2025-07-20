@@ -3,8 +3,8 @@ import { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import Header from '../../../components/Header';
+import Footer from '../../../components/Footer';
 
 interface Article {
   id: number;

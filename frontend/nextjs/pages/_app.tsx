@@ -2,9 +2,8 @@
 import '../styles/globals.css';   // ← global styles
 import type { AppProps } from 'next/app'
 import Script from 'next/script';
-import { Analytics } from "@vercel/analytics/next"
 
-export default function MyApp({ Component, pageProps } ) {
+export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Script

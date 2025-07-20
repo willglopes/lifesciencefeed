@@ -31,7 +31,7 @@ export default function Header() {
     <>
       <TopBanner />
       <BottomBanner />
-      <BannerAd />
+      <BannerAd adSlot="header-banner" />
 
       <header
         className={`bg-white shadow-md sticky top-0 z-50 transition-all duration-300 ${

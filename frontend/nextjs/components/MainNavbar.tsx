@@ -48,7 +48,7 @@ export default function MainNavbar() {
             name: item.attributes?.name ?? item.name ?? '',
             slug: item.attributes?.slug ?? item.slug ?? '',
           }))
-          .filter(a => !!a.slug);
+          .filter((a: any) => !!a.slug);
         setTherapyAreas(list);
       } catch (e) {
         // Handle error silently in production

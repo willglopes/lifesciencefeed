@@ -37,7 +37,7 @@ export default function Footer() {
             };
           })
           .filter((it: any) => it._articleCount > 0)
-          .map(({ id, name, slug }) => ({ id, name, slug }));
+          .map(({ id, name, slug }: any) => ({ id, name, slug }));
 
         setTherapyAreas(taList);
 
@@ -61,7 +61,7 @@ export default function Footer() {
             };
           })
           .filter((it: any) => it._articleCount > 0)
-          .map(({ id, name, slug }) => ({ id, name, slug }));
+          .map(({ id, name, slug }: any) => ({ id, name, slug }));
 
         setCategories(catList);
       } catch (err) {

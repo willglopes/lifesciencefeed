@@ -39,7 +39,7 @@ export default function NavBar() {
             };
           })
           .filter((it: any) => it._articleCount > 0)
-          .map(({ id, name, slug }) => ({ id, name, slug }));
+          .map(({ id, name, slug }: any) => ({ id, name, slug }));
 
         setTherapyAreas(taList);
 
@@ -63,7 +63,7 @@ export default function NavBar() {
             };
           })
           .filter((it: any) => it._articleCount > 0)
-          .map(({ id, name, slug }) => ({ id, name, slug }));
+          .map(({ id, name, slug }: any) => ({ id, name, slug }));
 
         setCategories(catList);
 

@@ -2,8 +2,8 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
+import Head from 'next/head';
 import { useState, useEffect } from 'react';
-import Seo from '../../components/Seo';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import HeroCTA, { LoggedInWelcome } from '../../components/HeroCTA';
@@ -328,7 +328,7 @@ function CongressInfo({ sectionName }: { sectionName: string }) {
     <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-4 border border-green-200 mb-4">
       <div className="flex items-center mb-3">
         <div className="bg-green-600 rounded-full p-2 mr-3">
-          <MapPinIcon className="w-4 h-4 text-white" />
+          <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" /></svg>
         </div>
         <h3 className="font-semibold text-gray-900 text-sm">Upcoming {sectionName} Congress</h3>
       </div>
@@ -350,8 +350,8 @@ function CongressInfo({ sectionName }: { sectionName: string }) {
       </div>
       
       <button className="w-full bg-green-600 text-white py-2 px-3 rounded-md hover:bg-green-700 transition-colors text-sm flex items-center justify-center">
-        <ExternalLinkIcon className="w-3 h-3 mr-1" />
-        Register Now
+        <ExternalLinkIcon />
+        <span className="ml-1">Register Now</span>
       </button>
     </div>
   );
@@ -567,10 +567,13 @@ export default function EnhancedMedscapePage({
 
   return (
     <>
-      <Seo 
-        title={getPageTitle()}
-        description={getPageDescription()}
-      />
+      <Head>
+        <title>{getPageTitle()}</title>
+        <meta name="description" content={getPageDescription()} />
+        <meta property="og:title" content={getPageTitle()} />
+        <meta property="og:description" content={getPageDescription()} />
+        <meta property="og:type" content="website" />
+      </Head>
 
       <Header />
 

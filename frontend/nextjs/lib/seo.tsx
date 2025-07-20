@@ -1,18 +1,42 @@
-export function ArticleSchema(article) {
+// lib/seo.tsx
+import { ArticleSummary } from './api';
+
+export function ArticleSchema(article: ArticleSummary) {
   return {
     "@context": "https://schema.org",
     "@type": "NewsArticle",
-    headline: article.title,
-    datePublished: article.publishedAt,
-    author: { "@type": "Person", name: article.author.name },
-    publisher: {
+    "headline": article.title,
+    "description": article.excerpt,
+    "image": article.ImageUrl,
+    "datePublished": article.publishedAt,
+    "author": {
       "@type": "Organization",
-      name: "LifeScienceFeed",
-      logo: { "@type":"ImageObject", url: "https://www.lifesciencefeed.com/logo.png" }
+      "name": "Life Science Feed"
     },
-    mainEntityOfPage: {
-      "@type":"WebPage",
-      "@id": `https://www.lifesciencefeed.com/${article.categorySlug}/${article.slug}`
-    },
+    "publisher": {
+      "@type": "Organization", 
+      "name": "Life Science Feed"
+    }
   };
 }
+
+export function WebsiteSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Life Science Feed",
+    "description": "Your only reliable one-stop shop for medical news, clinical reference, and education.",
+    "url": process.env.NEXT_PUBLIC_SITE_URL || "https://lifesciencefeed.com"
+  };
+}
+
+export function OrganizationSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Life Science Feed",
+    "description": "Medical news and clinical reference platform",
+    "url": process.env.NEXT_PUBLIC_SITE_URL || "https://lifesciencefeed.com"
+  };
+}
+

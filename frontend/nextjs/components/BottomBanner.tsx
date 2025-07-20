@@ -15,10 +15,10 @@ export default function BottomBanner() {
             className="bg-gray-100 p-1 hover:bg-gray-200 rounded text-gray-900 focus:outline-none"
           >
              <svg
-              xmlns="http://www.w3.org/2000/svg"
-              alt="Search"
-              className="mySearchIcon" // Use the class from globals.css
-            >
+  xmlns="http://www.w3.org/2000/svg"
+  aria-label="Search"
+  className="mySearchIcon"
+>
               <path id="Vector" d="M15 15L21 21M10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10C17 13.866 13.866 17 10 17Z" fill="none"/>
             </svg>
           </button>

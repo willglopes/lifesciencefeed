@@ -1,20 +1,51 @@
-// src/components/Seo.tsx
-import Head from "next/head";
+// components/Seo.tsx
+import { ArticleSummary } from '../lib/api';
 
-interface SeoProps {
-  title: string;
-  description?: string;
+export function ArticleSchema(article: ArticleSummary) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    "headline": article.title,
+    "description": article.excerpt,
+    "image": article.ImageUrl,
+    "datePublished": article.publishedAt,
+    "author": {
+      "@type": "Organization",
+      "name": "Life Science Feed"
+    },
+    "publisher": {
+      "@type": "Organization", 
+      "name": "Life Science Feed"
+    }
+  };
 }
 
-export default function Seo({ title, description }: SeoProps) {
-  const base = "LifeScienceFeed.com";
-  return (
-    <Head>
-      <title>{base} - {title}</title>
-      {description && <meta name="description" content={description} />}
-      <meta charSet="utf-8" />
-      <link rel="icon" href="/images/favicon.png" />
-      {/* you can add og: tags here too */}
-    </Head>
-  );
+export function WebsiteSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Life Science Feed",
+    "description": "Your only reliable one-stop shop for medical news, clinical reference, and education.",
+    "url": process.env.NEXT_PUBLIC_SITE_URL || "https://lifesciencefeed.com"
+  };
 }
+
+export function OrganizationSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Life Science Feed",
+    "description": "Medical news and clinical reference platform",
+    "url": process.env.NEXT_PUBLIC_SITE_URL || "https://lifesciencefeed.com"
+  };
+}
+
+// Default export for easier importing
+const Seo = {
+  ArticleSchema,
+  WebsiteSchema,
+  OrganizationSchema
+};
+
+export default Seo;
+

@@ -1,3 +1,4 @@
+import { ArticleSummary, SectionMeta } from "../lib/api";
 // src/pages/index.tsx
 import { GetStaticProps } from 'next';
 import React from 'react';
@@ -21,8 +22,8 @@ import {
 import Link from 'next/link';
 
 interface HomeProps {
-  therapyAreas: fetchArticlesBySection[];
-  categories: fetchArticlesBySection[];
+  therapyAreas: SectionMeta[];
+  categories: SectionMeta[];
 }
 
 export const getStaticProps: GetStaticProps<HomeProps> = async () => {
@@ -38,9 +39,8 @@ export const getStaticProps: GetStaticProps<HomeProps> = async () => {
 export default function Home({ therapyAreas, categories }: HomeProps) {
   return (
     <>
-      <Seo title="Home" description="Latest medical news and insights" />
       
-      <Header therapyAreas={therapyAreas} categories={categories} />
+      <Header />
 
       <main className="container mx-auto py-8 space-y-12 border-t-2 px-4">
         {/* Sidebar + Carousel */}
@@ -68,31 +68,31 @@ export default function Home({ therapyAreas, categories }: HomeProps) {
 
       </main>
 
-      <BannerAd />
+      <BannerAd adSlot="homepage-banner" />
 
       <main className="container mx-auto py-8 space-y-12 px-4">
         <Cardiology />
       </main>
 
-      <BannerAd />
+      <BannerAd adSlot="homepage-banner" />
 
       <main className="container mx-auto py-8 space-y-12 px-4">
         <Oncology />
         <Congresses />
       </main>
 
-      <BannerAd />
+      <BannerAd adSlot="homepage-banner" />
 
       <main className="container mx-auto py-8 space-y-12 px-4">
         <Perspectives />
       </main>
 
-      <BannerAd />
+      <BannerAd adSlot="homepage-banner" />
 
       {/* little spacer */}
       <div className="py-8" />
 
-      <Footer therapyAreas={therapyAreas} categories={categories} />
+      <Footer />
     </>
   );
 }
