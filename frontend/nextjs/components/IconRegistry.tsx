@@ -1,5 +1,5 @@
 // src/components/IconRegistry.tsx
-import React from "react";
+import React from 'react';
 
 // Fallback inline icons for menu and close
 const IconPaths: Record<string, JSX.Element> = {
