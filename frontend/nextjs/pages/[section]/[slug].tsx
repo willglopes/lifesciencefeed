@@ -131,33 +131,37 @@ export const getStaticProps: GetStaticProps<LandingProps> = async ({ params }) =
         diseaseAreas = await fetchDiseaseAreasByTherapyArea(slug);
         break;
       
-      case 'category':
-        allSections = await fetchCategories();
-        sectionMeta = allSections.find(s => s.slug === slug) ?? { name: slug, slug };
-        break;
-      
       case 'disease-area':
-        allSections = await fetchDiseaseAreas();
-        sectionMeta = allSections.find(s => s.slug === slug) ?? { name: slug, slug };
-        
-        try {
-          const response = await fetch(
-            `${process.env.NEXT_PUBLIC_STRAPI_URL}/api/disease-areas?populate=therapy_areas&pagination[pageSize]=100`
-          );
-          if (response.ok) {
-            const json = await response.json();
-            const diseaseAreaWithTherapy = json.data?.find((item: any) => item.slug === slug);
-            if (diseaseAreaWithTherapy?.therapy_areas) {
-              parentTherapyArea = {
-                name: diseaseAreaWithTherapy.therapy_areas.name,
-                slug: diseaseAreaWithTherapy.therapy_areas.slug,
-              };
-            }
-          }
-        } catch (error) {
-          // Handle error silently
+  allSections = await fetchDiseaseAreas();
+  sectionMeta = allSections.find(s => s.slug === slug) ?? { name: slug, slug };
+  
+  try {
+    const strapiUrl = process.env.NEXT_PUBLIC_STRAPI_URL;
+    if (strapiUrl) {
+      const response = await fetch(
+        `${strapiUrl}/api/disease-areas?populate=therapy_areas&pagination[pageSize]=100`
+      );
+      
+      // Check if response is actually JSON
+      const contentType = response.headers.get('content-type');
+      if (response.ok && contentType && contentType.includes('application/json')) {
+        const json = await response.json();
+        const diseaseAreaWithTherapy = json.data?.find((item: any) => item.slug === slug);
+        if (diseaseAreaWithTherapy?.therapy_areas) {
+          parentTherapyArea = {
+            name: diseaseAreaWithTherapy.therapy_areas.name,
+            slug: diseaseAreaWithTherapy.therapy_areas.slug,
+          };
         }
-        break;
+      } else {
+        console.warn('API returned non-JSON response:', response.status, response.statusText);
+      }
+    }
+  } catch (error) {
+    console.error('Failed to fetch disease area therapy areas:', error);
+    // Continue without parent therapy area
+  }
+  break;
     }
 
     const articles = await fetchArticlesBySection(section, slug);
