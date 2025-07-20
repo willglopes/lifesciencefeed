@@ -20,6 +20,7 @@ import {
   fetchArticlesBySection,
 } from '../lib/api';
 import Link from 'next/link';
+import { fetchArticlesWithDiseaseAreas } from '../lib/api';
 
 interface HomeProps {
   therapyAreas: SectionMeta[];
@@ -29,9 +30,13 @@ interface HomeProps {
 export const getStaticProps: GetStaticProps = async () => {
   try {
     // Your existing API calls with error handling
-    let articles = [];
-    let categories = [];
-    let therapyAreas = [];
+    
+
+// In your getStaticProps function:
+let articles: ArticleSummary[] = [];
+let categories: SectionMeta[] = [];
+let therapyAreas: SectionMeta[] = [];
+
 
     try {
       articles = await fetchArticlesWithDiseaseAreas();
