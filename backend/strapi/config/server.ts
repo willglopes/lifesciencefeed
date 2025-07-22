@@ -4,10 +4,11 @@ module.exports = ({ env }) => ({
   port: env.int('PORT', 8080),
   url: env('PUBLIC_URL'),
   app: {
-    // Parse the comma‑separated APP_KEYS into an array
+    // Strapi’s session middleware needs this array of keys:
     keys: env.array('APP_KEYS'),
   },
 });
+
 
 
 
