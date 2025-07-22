@@ -1,7 +1,13 @@
+// config/env/production/database.js
 module.exports = ({ env }) => ({
   connection: {
     client: 'postgres',
     connection: env('DATABASE_URL'),
-    debug: false,
+    ssl: { rejectUnauthorized: false },
+    pool: { min: 0, max: 5 },
+  },
+  settings: {
+    forceMigration: true,
+    runMigrations: true,
   },
 });

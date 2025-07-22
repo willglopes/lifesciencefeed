@@ -1,14 +1,13 @@
+// config/env/production/database.js
 module.exports = ({ env }) => ({
   connection: {
     client: 'postgres',
-    connection: {
-      host: env('PGHOST'),
-      port: env.int('PGPORT', 5432),
-      database: env('PGDATABASE'),
-      user: env('PGUSER'),
-      password: env('PGPASSWORD'),
-      ssl: env.bool('DATABASE_SSL', false)
-    },
-    debug: false,
+    connection: env('DATABASE_URL'),
+    ssl: { rejectUnauthorized: false },
+    pool: { min: 0, max: 5 },
+  },
+  settings: {
+    forceMigration: true,
+    runMigrations: true,
   },
 });
