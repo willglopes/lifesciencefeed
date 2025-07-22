@@ -11,7 +11,7 @@ module.exports = ({ env }) => ({
     runMigrations: true,
   },
 });
-
+console.log('DATABASE_URL is:', env('DATABASE_URL'));
 
 /*
   import path from 'path';
