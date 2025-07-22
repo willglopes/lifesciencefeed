@@ -1,14 +1,23 @@
-// config/env/production/database.js
 module.exports = ({ env }) => ({
   connection: {
     client: 'postgres',
-    connection: env('DATABASE_URL'),
-    ssl: { rejectUnauthorized: false },
-    pool: { min: 0, max: 5 },
-  },
-  settings: {
-    forceMigration: true,
-    runMigrations: true,
+    connection: {
+      // Parse the URL, but fall back to PG* parts if you want
+      connectionString: env('DATABASE_URL'),
+      host:                 env('PGHOST'),
+      port:                 env.int('PGPORT', 5432),
+      database:             env('PGDATABASE'),
+      user:                 env('PGUSER'),
+      password:             env('PGPASSWORD'),
+      // Railway’s Postgres uses SSL by default
+      ssl: env.bool('DATABASE_SSL', true) && { rejectUnauthorized: false },
+    },
+    // Knex pool settings
+    pool: {
+      min: env.int('DATABASE_POOL_MIN', 2),
+      max: env.int('DATABASE_POOL_MAX', 10),
+    },
+    // Give Knex more time to grab a connection
+    acquireConnectionTimeout: env.int('DATABASE_CONNECTION_TIMEOUT', 60000),
   },
 });
-console.log('DATABASE_URL is:', env('DATABASE_URL'));
