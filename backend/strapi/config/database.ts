@@ -1,4 +1,19 @@
-{/*
+// config/env/production/database.js
+module.exports = ({ env }) => ({
+  connection: {
+    client: 'postgres',
+    connection: env('DATABASE_URL'),
+    ssl: { rejectUnauthorized: false },
+    pool: { min: 0, max: 5 },
+  },
+  settings: {
+    forceMigration: true,
+    runMigrations: true,
+  },
+});
+
+
+/*
   import path from 'path';
 
 export default ({ env }) => {
@@ -59,3 +74,4 @@ export default ({ env }) => {
     },
   };
 };
+*/
